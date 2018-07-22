@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  	// here we are informing heroku that server should be started using following command
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  // here we are informing heroku that which version of node should be used
   "engines": {
     "node": "8.11.3"
   },

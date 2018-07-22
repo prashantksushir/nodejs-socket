@@ -1,3 +1,10 @@
+// Comments of package.json file as we can't add comments in package.json file
+// we have added start in script object => here we are informing heroku that server 
+// should be started using following command
+// we have added engines object and given node key in it => here we are informing heroku 
+// that which version of node should be used
+
+
 // inbuild library
 const path = require('path');
 // external library
@@ -23,6 +30,17 @@ app.use(express.static(publicPath));
 // user connected event handler
 io.on('connection', (socket)=>{
 	console.log('New user connected');
+
+	socket.emit('newEmail', {
+		from : 'mike@example.com',
+		text : 'whats up?',
+		createdAt : new Date().getTime()
+	});
+
+	// custome event
+	socket.on('createEmail', (email)=>{
+		console.log('Create Email', email);
+	});
 
 	// user disconnected event handler
 	socket.on('disconnect', ()=>{
