@@ -14,10 +14,12 @@ socket.on('connect', function () {
 	// });
 
 	// custom event for creating message for chat app
-	// socket.emit('createMessage', {
-	// 	from : 'Jack',
-	// 	text : 'Hi that works for me'
-	// });
+	socket.emit('createMessage', {
+		from : 'Jack',
+		text : 'Hi that works for me'
+	}, function (data) {
+		console.log('Received acknowledgement from server : ', data);
+	});
 
 });
 

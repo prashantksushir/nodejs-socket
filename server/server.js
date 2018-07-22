@@ -56,7 +56,7 @@ io.on('connection', (socket)=>{
 	// });
 
 	// custome event for creating message in chat app
-	socket.on('createMessage', (message) => {
+	socket.on('createMessage', (message, callback) => {
 		console.log('Create Message', message);
 
 		// it emits the message to all connected users including current user
@@ -68,6 +68,8 @@ io.on('connection', (socket)=>{
 		// });
 
 		socket.broadcast.emit('newMessage', generateMessage(message.from, message.text));
+		// below line will repond to users create message event
+		callback('Server has acknowledged your request');
 
 	});
 
