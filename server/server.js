@@ -31,15 +31,27 @@ app.use(express.static(publicPath));
 io.on('connection', (socket)=>{
 	console.log('New user connected');
 
-	socket.emit('newEmail', {
-		from : 'mike@example.com',
-		text : 'whats up?',
+	// custome event
+	// socket.emit('newEmail', {
+	// 	from : 'mike@example.com',
+	// 	text : 'whats up?',
+	// 	createdAt : new Date().getTime()
+	// });
+
+	socket.emit('newMessage', {
+		from : 'John',
+		text : 'See you then',
 		createdAt : new Date().getTime()
 	});
 
-	// custome event
-	socket.on('createEmail', (email)=>{
-		console.log('Create Email', email);
+	// // custome event
+	// socket.on('createEmail', (email)=>{
+	// 	console.log('Create Email', email);
+	// });
+
+	// custome event for creating message in chat app
+	socket.on('createMessage', (message) => {
+		console.log('Create Message', message);
 	});
 
 	// user disconnected event handler
