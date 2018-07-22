@@ -31,6 +31,17 @@ app.use(express.static(publicPath));
 io.on('connection', (socket)=>{
 	console.log('New user connected');
 
+	socket.emit('newMessage', {
+		from : 'Admin',
+		text : 'Welcome to Chat Application'
+	});
+
+	socket.broadcast.emit('newMessage', {
+		from : 'Admin',
+		text : 'New user joined',
+		createdAt : new Date().getTime()
+	});
+
 	// custome event
 	// socket.emit('newEmail', {
 	// 	from : 'mike@example.com',
@@ -38,11 +49,13 @@ io.on('connection', (socket)=>{
 	// 	createdAt : new Date().getTime()
 	// });
 
-	socket.emit('newMessage', {
-		from : 'John',
-		text : 'See you then',
-		createdAt : new Date().getTime()
-	});
+	// custome event
+	// this emits the event to current user connected with this socket
+	// socket.emit('newMessage', {
+	// 	from : 'John',
+	// 	text : 'See you then',
+	// 	createdAt : new Date().getTime()
+	// });
 
 	// // custome event
 	// socket.on('createEmail', (email)=>{
@@ -52,6 +65,21 @@ io.on('connection', (socket)=>{
 	// custome event for creating message in chat app
 	socket.on('createMessage', (message) => {
 		console.log('Create Message', message);
+
+		// it emits the message to all connected users including current user
+		// connected with this socket
+		// io.emit('newMessage', {
+		// 	from : message.from,
+		// 	text : message.text,
+		// 	createdAt : new Date().getTime()
+		// });
+
+		socket.broadcast.emit('newMessage', {
+			from : message.from,
+			text : message.text,
+			createdAt : new Date().getTime()
+		});
+
 	});
 
 	// user disconnected event handler
