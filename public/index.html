@@ -7,6 +7,26 @@
 
 	<body>
 		<p>Welcome to the chat app</p>
+
+		<!-- whenever socket io library is configured on server side then by default it gets available
+		 for client as well and it is available at location 
+		 "http://localhost:3000/socket.io/socket.io.js"
+		 so to use it on client side we are referring it as below -->
+		<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			var socket = io();
+
+			// client connected event handler
+			socket.on('connect', ()=>{
+				console.log('Connected to server');
+			});
+
+			// client disconencted event handler
+			socket.on('disconnect', ()=>{
+				console.log('Disconnected from server');
+			});
+
+		</script>
 	</body>
 
 </html>
