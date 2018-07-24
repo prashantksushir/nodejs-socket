@@ -14,12 +14,12 @@ socket.on('connect', function () {
 	// });
 
 	// custom event for creating message for chat app
-	socket.emit('createMessage', {
-		from : 'Jack',
-		text : 'Hi that works for me'
-	}, function (data) {
-		console.log('Received acknowledgement from server : ', data);
-	});
+	// socket.emit('createMessage', {
+	// 	from : 'Jack',
+	// 	text : 'Hi that works for me'
+	// }, function (data) {
+	// 	console.log('Received acknowledgement from server : ', data);
+	// });
 
 });
 
@@ -39,5 +39,17 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
 	console.log('New Message', message);
+	var li = jQuery('<li></li>');
+	li.text(`${message.from} : ${message.text}`);
+	jQuery('#messages').append(li);
 });
 
+jQuery('#message-form').on('submit', function (e){
+	e.preventDefault();
+	socket.emit('createMessage', {
+		from : 'User',
+		text : jQuery('[name=messages]').val()
+	}, function(){
+		console.log('acknowledgement received');
+	});
+});
